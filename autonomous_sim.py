@@ -12,7 +12,7 @@ TAG_SIZE = 0.16
 while True:
     ret, frame = cap.read()
     if not ret:
-        print("Kamera bulunamadı.")
+        print("Kamera bulunamadi.")
         break
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -37,6 +37,8 @@ while True:
             if abs(offset_x) < 50:
                 if distance > 60:
                     action = "İLERİ GİT"
+                elif distance < 40:
+                    action = "GERİ GİT"
                 else:
                     action = "DUR"
             elif offset_x > 50:
@@ -44,7 +46,7 @@ while True:
             else:
                 action = "SOLA DON"
         else:
-            action = "Tag bulunamadı."
+            action = "Tag bulunamadi."
 
         cv2.putText(frame, f"{action}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
         print(f"Tag {r.tag_id} | Mesafe: {distance:.1f} cm | Offset: {offset_x:.1f} | Aksiyon: {action}")
